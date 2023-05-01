@@ -1,0 +1,17 @@
+import sys
+import string
+
+s =  sys.argv[0]
+
+for line in sys.stdin:
+	line = line.upper()
+	result = ""
+	for c in line:
+		if c.isalpha():
+			result += chr((ord(c) + s-65) % 26+65)
+	for i in range(len(result)):
+		if i % 5 == 0:
+			print(" ", end="")
+		if i % 50 == 0:
+			print()
+		print(result[i], end="")
