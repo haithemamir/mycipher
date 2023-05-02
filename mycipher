@@ -1,17 +1,34 @@
 import sys
-import string
 
-s =  sys.argv[0]
+if len(sys.argv) == 2:
+  key = sys.argv[1]
+  message = input()
+  message = message.upper()
+  english_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  onlyAlpha = ""
 
-for line in sys.stdin:
-	line = line.upper()
-	result = ""
-	for c in line:
-		if c.isalpha():
-			result += chr((ord(c) + s-65) % 26+65)
-	for i in range(len(result)):
-		if i % 5 == 0:
-			print(" ", end="")
-		if i % 50 == 0:
-			print()
-		print(result[i], end="")
+  for i in range(len(message)):
+    if message[i].isalpha():
+      onlyAlpha += message[i]
+  cipher_word = ""
+  for i in range(len(onlyAlpha)):
+    index_val = english_alphabet.index(onlyAlpha[i]) + int(key)
+    cipher_word += english_alphabet[index_val]
+
+  count = 0
+  newLinecount = 0
+  
+  for i in range(len(message)):
+    count += 1
+    if count == 6:
+      cipher_word = cipher_word[:i] + " " + cipher_word[i:]
+      count = 0
+      newLinecount += 1
+      if newLinecount == 10:
+        cipher_word = cipher_word[:i]+"\n"+cipher_word[i:]
+        newLinecount = 0
+        count -= 1
+  print(cipher_word)
+
+else:
+  print("Usage: python3 mycipher.py")
